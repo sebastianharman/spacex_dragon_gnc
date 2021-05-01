@@ -6,8 +6,6 @@ file_path = "sim_data.csv"
 driver = webdriver.Chrome()
 driver.get(url)
 
-# roll_val, roll_velocity, pitch_val, pitch_velocity, yaw_val, yaw_velocity, x_val, y_val, z_val, x_velocity, y_velocity, z_velocity, range_val, rate = "", "", "", "", "", "", "", "", "", "", "", "", "", ""
-
 # the current live data
 val_dict_current = {
     "roll_val": "",
@@ -89,7 +87,8 @@ while (1):
     with open(file_path, 'w') as file:
         file.write(file_buffer)
 
-    # print statements to read data from software
+
+    # print statements to read data 
 
     #print(val_dict_current["roll_val"]) # verified
     #print(val_dict_current["pitch_val"]) # verified
