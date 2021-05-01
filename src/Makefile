@@ -8,7 +8,7 @@ virtual_key_press.o : virtual_key_press.cpp virtual_key_press.h
 	g++ -c virtual_key_press.cpp virtual_key_press.h
 
 sim_data.o : sim_data.cpp sim_data.h
-	g++ -c sim_data.cpp sim_data
+	g++ -c sim_data.cpp sim_data.h
 
 clean :
 	rm *.o spacex_dragon_gnc *.gch

@@ -4,7 +4,12 @@
 
 #include "sim_data.h"
 
-void sim_data::set_all_vals(std::vector <double> constructor_data)
+sim_data::sim_data()
+{
+    roll_val = roll_velocity = pitch_val = pitch_velocity = yaw_val = yaw_velocity = x_val = y_val = z_val = range_val = rate = x_velocity = y_velocity = z_velocity = 0.0;
+}
+
+void sim_data::set_all_values(std::vector <double> constructor_data)
 {
     roll_val = constructor_data[0];
     roll_velocity = constructor_data[1];
