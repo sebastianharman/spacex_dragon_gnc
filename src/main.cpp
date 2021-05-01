@@ -44,7 +44,7 @@ int main()
 
         prev_data.set_all_values(data_buffer); // constructs class which holds data from last loop
 
-        }
+    }
 
     return 0;
 }
