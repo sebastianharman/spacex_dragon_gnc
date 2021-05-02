@@ -1,3 +1,6 @@
+#ifndef SIM_DATA_H
+#define SIM_DATA_H
+
 #include <vector>
 
 class sim_data {
@@ -8,3 +11,5 @@ class sim_data {
         void set_all_values(std::vector <double> constructor_data);
 
 };
+
+#endif
