@@ -11,7 +11,7 @@
 #define FILE_PATH           "sim_data.csv"
 #define REFRESH_RATE_HZ     5
 #define MS_PER_SECOND       1000
-#define Q_KEY               0x51
+#define P_KEY               0x50
 
 int main()
 {
@@ -39,7 +39,7 @@ int main()
 
         /*************************/
 
-        if (GetKeyState(Q_KEY) < 0)
+        if (GetKeyState(P_KEY) < 0)
         {
             return 0;
         }
