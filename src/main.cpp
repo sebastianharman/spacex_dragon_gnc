@@ -18,7 +18,7 @@ int main()
     sim_data live_data = sim_data(); // current flight data
     sim_data prev_data = sim_data(); // last state recorded
     std::vector <double> data_buffer(11, 0.0); // a vector to hold file data 
-    std::string line_buffer;
+    std::string line_buffer; // string for each line for vector
     bool sleep_on_end = true;
 
     while (1)
