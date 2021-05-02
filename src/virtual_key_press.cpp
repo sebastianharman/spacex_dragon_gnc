@@ -62,6 +62,5 @@ void press_key(int key_code)
         case Q_KEY:
             std::cout << "\\/ - Pos backwards" << std::endl;
             break;
-        
     }
 }

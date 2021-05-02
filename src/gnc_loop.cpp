@@ -47,17 +47,15 @@ int keycode_negative, int keycode_positive)
     {
         if (orientation_velocity > 0)
         {
-            for (int i = 0; i < abs(orientation_velocity * 10); i++) {
+            for (int i = 0; i < abs(orientation_velocity * 10); i++)
                 press_key(keycode_negative);
-            }
             return;
         }
         else if (orientation_velocity < 0)
         {
-            for (int i = 0; i < abs(orientation_velocity * 10); i++) {
+            for (int i = 0; i < abs(orientation_velocity * 10); i++)
                 press_key(keycode_positive);
-            }
-        return;
+            return;
         }
     }
     if (orientation_value >= ORIENTATION_PRECISON) // positive

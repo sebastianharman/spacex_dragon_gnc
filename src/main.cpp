@@ -15,8 +15,8 @@
 
 int main()
 {
-    sim_data live_data = sim_data();
-    sim_data prev_data = sim_data();
+    sim_data live_data = sim_data(); // current flight data
+    sim_data prev_data = sim_data(); // last state recorded
     std::vector <double> data_buffer(11, 0.0); // a vector to hold file data 
     std::string line_buffer;
     bool sleep_on_end = true;
@@ -45,8 +45,6 @@ int main()
         }
 
         gnc_loop(live_data);
-        //std::cout << "(" << prev_data.x_val << "-" << live_data.x_val << ") * " << REFRESH_RATE_HZ << " = " << (prev_data.x_val - live_data.x_val) * REFRESH_RATE_HZ << std::endl;
-        //press_key(0x45);
 
         /*************************/
 
@@ -56,7 +54,6 @@ int main()
             sleep_on_end= true;
 
         prev_data.set_all_values(data_buffer); // constructs class which holds data from last loop
-
     }
 
     return 0;
