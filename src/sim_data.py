@@ -1,4 +1,5 @@
 from selenium import webdriver
+import os
 
 url = "https://iss-sim.spacex.com/"
 file_path = "sim_data.csv"
@@ -27,7 +28,7 @@ val_dict_current = {
 
 # the xpath locations of all the data
 xpath_dict = { 
-    "roll_val": "(//div[@class='error'])[2]",
+    "roll_val": "//div[@id='roll']//div[1]",
     "roll_velocity": "(//div[@id='roll']//div)[2]",
 
     "pitch_val": "//div[@class='error']",
@@ -50,37 +51,21 @@ while (1):
     file_buffer = ""
 
     # collects the data
-    val_dict_current["roll_val"] = driver.find_element_by_xpath(xpath_dict["roll_val"]).text
-    val_dict_current["roll_velocity"] = driver.find_element_by_xpath(xpath_dict["roll_velocity"]).text
+    val_dict_current["roll_val"] = driver.find_element_by_xpath(xpath_dict["roll_val"]).text.replace("°", "")
+    val_dict_current["roll_velocity"] = driver.find_element_by_xpath(xpath_dict["roll_velocity"]).text.replace("°/s", "")
 
-    val_dict_current["pitch_val"] = driver.find_element_by_xpath(xpath_dict["pitch_val"]).text
-    val_dict_current["pitch_velocity"] = driver.find_element_by_xpath(xpath_dict["pitch_velocity"]).text
+    val_dict_current["pitch_val"] = driver.find_element_by_xpath(xpath_dict["pitch_val"]).text.replace("°", "")
+    val_dict_current["pitch_velocity"] = driver.find_element_by_xpath(xpath_dict["pitch_velocity"]).text.replace("°/s", "")
 
-    val_dict_current["yaw_val"] = driver.find_element_by_xpath(xpath_dict["yaw_val"]).text
-    val_dict_current["yaw_velocity"] = driver.find_element_by_xpath(xpath_dict["yaw_velocity"]).text
+    val_dict_current["yaw_val"] = driver.find_element_by_xpath(xpath_dict["yaw_val"]).text.replace("°", "")
+    val_dict_current["yaw_velocity"] = driver.find_element_by_xpath(xpath_dict["yaw_velocity"]).text.replace("°/s", "")
 
-    val_dict_current["x_val"] = driver.find_element_by_xpath(xpath_dict["x_val"]).text
-    val_dict_current["y_val"] = driver.find_element_by_xpath(xpath_dict["y_val"]).text
-    val_dict_current["z_val"] = driver.find_element_by_xpath(xpath_dict["z_val"]).text
+    val_dict_current["x_val"] = driver.find_element_by_xpath(xpath_dict["x_val"]).text.replace(" m", "")
+    val_dict_current["y_val"] = driver.find_element_by_xpath(xpath_dict["y_val"]).text.replace(" m", "")
+    val_dict_current["z_val"] = driver.find_element_by_xpath(xpath_dict["z_val"]).text.replace(" m", "")
 
-    val_dict_current["range_val"] = driver.find_element_by_xpath(xpath_dict["range_val"]).text
-    val_dict_current["rate"] = driver.find_element_by_xpath(xpath_dict["rate"]).text
-
-    # reformats the data
-    val_dict_current["roll_val"] = val_dict_current["roll_val"].replace("°", "")
-    val_dict_current["pitch_val"] = val_dict_current["pitch_val"].replace("°", "")
-    val_dict_current["yaw_val"] = val_dict_current["yaw_val"].replace("°", "")
-    
-    val_dict_current["roll_velocity"] = val_dict_current["roll_velocity"].replace("°/s", "")
-    val_dict_current["pitch_velocity"] = val_dict_current["pitch_velocity"].replace("°/s", "")
-    val_dict_current["yaw_velocity"] = val_dict_current["yaw_velocity"].replace("°/s", "")
-
-    val_dict_current["x_val"] = val_dict_current["x_val"].replace(" m", "")
-    val_dict_current["y_val"] = val_dict_current["y_val"].replace(" m", "")
-    val_dict_current["z_val"] = val_dict_current["z_val"].replace(" m", "")
-
-    val_dict_current["range_val"] = val_dict_current["range_val"].replace(" m", "")
-    val_dict_current["rate"] = val_dict_current["rate"].replace("m/s", "")
+    val_dict_current["range_val"] = driver.find_element_by_xpath(xpath_dict["range_val"]).text.replace(" m", "")
+    val_dict_current["rate"] = driver.find_element_by_xpath(xpath_dict["rate"]).text.replace("m/s", "")
 
     file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["roll_velocity"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["pitch_velocity"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["yaw_velocity"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["rate"])
 
@@ -89,20 +74,16 @@ while (1):
 
 
     # print statements to read data 
+    os.system("cls" if os.name=="nt" else "clear")
 
-    #print(val_dict_current["roll_val"]) # verified
-    #print(val_dict_current["pitch_val"]) # verified
-    #print(val_dict_current["yaw_val"]) # verified
+    print("Roll val: " + val_dict_current["roll_val"]) # verified
+    print("Pitch val: " + val_dict_current["pitch_val"]) # verified
+    print("Yaw val: " + val_dict_current["yaw_val"]) # verified
 
-    # print(val_dict_current["roll_velocity"]) # verified
-    # print(val_dict_current["pitch_velocity"]) # verified
-    # print(val_dict_current["yaw_velocity"]) # verified
+    print("X val: " + val_dict_current["x_val"]) # verified
+    print("Y val: " + val_dict_current["y_val"]) # verified
+    print("Z val: " + val_dict_current["z_val"]) # verified
 
-    # print(val_dict_current["x_val"]) # verified
-    # print(val_dict_current["y_val"]) # verified
-    #print(val_dict_current["z_val"]) # verified
+    print("Range val: " + val_dict_current["range_val"])
+    print("Rate val: " + val_dict_current["rate"])
 
-    # print(val_dict_current["range_val"])
-    # print(val_dict_current["rate"])
-
-    
