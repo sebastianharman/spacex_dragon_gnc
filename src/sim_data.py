@@ -5,7 +5,7 @@ URL = "https://iss-sim.spacex.com/"
 FILE_PATH = "sim_data.csv"
 
 driver = webdriver.Chrome()
-driver.get(url)
+driver.get(URL)
 
 # the current live data
 val_dict_current = {
@@ -69,7 +69,7 @@ while (1):
 
     file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["roll_velocity"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["pitch_velocity"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["yaw_velocity"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["rate"])
 
-    with open(file_path, 'w') as file:
+    with open(FILE_PATH, 'w') as file:
         file.write(file_buffer)
 
 
