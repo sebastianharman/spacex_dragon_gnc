@@ -1,8 +1,8 @@
 from selenium import webdriver
 import os
 
-url = "https://iss-sim.spacex.com/"
-file_path = "sim_data.csv"
+URL = "https://iss-sim.spacex.com/"
+FILE_PATH = "sim_data.csv"
 
 driver = webdriver.Chrome()
 driver.get(url)
