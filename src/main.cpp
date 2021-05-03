@@ -9,12 +9,19 @@
 #include "gnc_loop.h"
 
 #define FILE_PATH           "sim_data.csv"
-#define REFRESH_RATE_HZ     5
+#define REFRESH_RATE_HZ     4
 #define MS_PER_SECOND       1000
 #define P_KEY               0x50
+#define START_TIMER_SLEEP   500
 
 int main()
 {
+    for (int i = 3; i > 0; i--)
+    {
+        std::cout << "Until start: " << i << std::endl;
+        Sleep(START_TIMER_SLEEP);
+    }
+
     sim_data live_data = sim_data(); // current flight data
     sim_data prev_data = sim_data(); // last state recorded
     std::vector <double> data_buffer(11, 0.0); // a vector to hold file data 
