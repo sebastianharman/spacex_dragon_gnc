@@ -53,6 +53,7 @@ int main()
         }
 
         gnc_loop(live_data);
+        std::cout << "\nRoll: " << live_data.roll_velocity << "\nPitch: " << live_data.pitch_velocity << "\nYaw: " << live_data.yaw_velocity << std::endl;
 
         /*************************/
 

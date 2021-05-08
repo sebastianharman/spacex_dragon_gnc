@@ -40,8 +40,7 @@ void gnc_loop(sim_data& data)
     /*** position gnc ***/
 }
 
-void orientation_check(double orientation_value, double orientation_velocity,
-int keycode_negative, int keycode_positive, sim_data& data)
+void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data)
 {
     if (orientation_value < ORIENTATION_PRECISON && orientation_value > (ORIENTATION_PRECISON * -1))
     {
@@ -49,13 +48,11 @@ int keycode_negative, int keycode_positive, sim_data& data)
         {
             for (int i = 0; i < abs(orientation_velocity * 10); i++)
                 press_key(keycode_negative, data);
-            return;
         }
         else if (orientation_velocity < 0)
         {
             for (int i = 0; i < abs(orientation_velocity * 10); i++)
                 press_key(keycode_positive, data);
-            return;
         }
     }
     if (orientation_value >= ORIENTATION_PRECISON) // positive
