@@ -16,5 +16,5 @@ The C++ code can be built by running the "make" command in the src/ directory. U
 
 ### The C++ code interacts with the sim using virtual key presses, it can be stopped instantly by pressing the 'P' key on the keyboard.  
 
-The code here uses the chrome browser with chromdriver, however this can be modified to use any browser/browser version.
+The code here uses the chrome browser with chromedriver, however this can be modified to use any browser/browser version.
 
