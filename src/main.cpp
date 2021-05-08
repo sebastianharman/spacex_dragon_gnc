@@ -9,7 +9,7 @@
 #include "gnc_loop.h"
 
 #define FILE_PATH           "sim_data.csv"
-#define REFRESH_RATE_HZ     4
+#define REFRESH_RATE_HZ     5
 #define MS_PER_SECOND       1000
 #define P_KEY               0x50
 #define START_TIMER_SLEEP   500
@@ -37,7 +37,7 @@ int main()
         }
         file.close();
 
-        live_data.set_all_values(data_buffer);
+        live_data.set_live_values(data_buffer);
 
         // position velocity calculations
         live_data.x_velocity = (prev_data.x_val - live_data.x_val) * REFRESH_RATE_HZ;
@@ -59,7 +59,7 @@ int main()
 
         Sleep(MS_PER_SECOND / REFRESH_RATE_HZ);
 
-        prev_data.set_all_values(data_buffer); // constructs class which holds data from last loop
+        prev_data.set_live_values(data_buffer); // constructs class which holds data from last loop
     }
 
     return 0;

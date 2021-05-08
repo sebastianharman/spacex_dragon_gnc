@@ -18,8 +18,8 @@
 #define Q_KEY               0x51    // pos backwards
 
 // flight profile config
-const double FAST_ORIENTATION_VELOCITY =         0.5;
-const double SLOW_ORIENTATION_VELOCITY =         0.1;
+const double FAST_ORIENTATION_VELOCITY =         5;
+const double SLOW_ORIENTATION_VELOCITY =         1;
 const double ORIENTATION_VELOCITY_THRESHOLD =    5;
 const double ORIENTATION_PRECISON =              0.1;
 
@@ -46,13 +46,15 @@ void orientation_check(double orientation_value, double orientation_velocity, in
     {
         if (orientation_velocity > 0)
         {
-            for (int i = 0; i < abs(orientation_velocity * 10); i++)
+            for (int i = 0; i < abs(orientation_velocity); i++)
                 press_key(keycode_negative, data);
+            return;
         }
         else if (orientation_velocity < 0)
         {
-            for (int i = 0; i < abs(orientation_velocity * 10); i++)
+            for (int i = 0; i < abs(orientation_velocity); i++)
                 press_key(keycode_positive, data);
+            return;
         }
     }
     if (orientation_value >= ORIENTATION_PRECISON) // positive
