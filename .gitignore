@@ -1,1 +1,8 @@
-*.csv
+src/sim_data.csv
+
+# object files
+*.o
+*.gch
+
+# executable
+*.exe
