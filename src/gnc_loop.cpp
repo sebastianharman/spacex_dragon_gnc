@@ -23,38 +23,38 @@ const double SLOW_ORIENTATION_VELOCITY =         0.1;
 const double ORIENTATION_VELOCITY_THRESHOLD =    5;
 const double ORIENTATION_PRECISON =              0.1;
 
-void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive);
+void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data);
 
 void gnc_loop(sim_data& data)
 {
     /*** orientation gnc ***/
 
     // roll
-    orientation_check(data.roll_val, data.roll_velocity, COMMA_KEY, FULLSTOP_KEY);
+    orientation_check(data.roll_val, data.roll_velocity, COMMA_KEY, FULLSTOP_KEY, data);
     // pitch
-    orientation_check(data.pitch_val, data.pitch_velocity, UP_ARROW, DOWN_ARROW);
+    orientation_check(data.pitch_val, data.pitch_velocity, UP_ARROW, DOWN_ARROW, data);
     // yaw
-    orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW); 
+    orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW, data); 
 
 
     /*** position gnc ***/
 }
 
 void orientation_check(double orientation_value, double orientation_velocity,
-int keycode_negative, int keycode_positive)
+int keycode_negative, int keycode_positive, sim_data& data)
 {
     if (orientation_value < ORIENTATION_PRECISON && orientation_value > (ORIENTATION_PRECISON * -1))
     {
         if (orientation_velocity > 0)
         {
             for (int i = 0; i < abs(orientation_velocity * 10); i++)
-                press_key(keycode_negative);
+                press_key(keycode_negative, data);
             return;
         }
         else if (orientation_velocity < 0)
         {
             for (int i = 0; i < abs(orientation_velocity * 10); i++)
-                press_key(keycode_positive);
+                press_key(keycode_positive, data);
             return;
         }
     }
@@ -63,16 +63,16 @@ int keycode_negative, int keycode_positive)
         if (orientation_value > ORIENTATION_VELOCITY_THRESHOLD) // fast
         {
             if (orientation_velocity > FAST_ORIENTATION_VELOCITY)
-                press_key(keycode_negative);
+                press_key(keycode_negative, data);
             else if (orientation_velocity < FAST_ORIENTATION_VELOCITY)
-                press_key(keycode_positive);
+                press_key(keycode_positive, data);
         }
         else // slow
         {
             if (orientation_velocity > SLOW_ORIENTATION_VELOCITY)
-                press_key(keycode_negative);
+                press_key(keycode_negative, data);
             else if (orientation_velocity < SLOW_ORIENTATION_VELOCITY)
-                press_key(keycode_positive);
+                press_key(keycode_positive, data);
         }
     }
     else if (orientation_value <= (ORIENTATION_PRECISON * -1)) // negative
@@ -80,16 +80,16 @@ int keycode_negative, int keycode_positive)
         if (orientation_value < (ORIENTATION_VELOCITY_THRESHOLD * -1)) // fast
         {
             if (orientation_velocity < (FAST_ORIENTATION_VELOCITY * -1))
-                press_key(keycode_positive);
+                press_key(keycode_positive, data);
             else if (orientation_velocity > (FAST_ORIENTATION_VELOCITY * -1))
-                press_key(keycode_negative);
+                press_key(keycode_negative, data);
         }
         else // slow
         {
             if (orientation_velocity > (SLOW_ORIENTATION_VELOCITY * -1))
-                press_key(keycode_negative);
+                press_key(keycode_negative, data);
             else if (orientation_velocity < (SLOW_ORIENTATION_VELOCITY * -1))
-                press_key(keycode_positive);
+                press_key(keycode_positive, data);
         }
     }
 }

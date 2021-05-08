@@ -1,6 +1,8 @@
 #include <iostream>
 #include <Windows.h>
 
+#include "sim_data.h"
+
 // windows virtual key codes
 #define FULLSTOP_KEY        0xBE    // roll right
 #define COMMA_KEY           0xBC    // roll left
@@ -15,7 +17,7 @@
 #define E_KEY               0x45    // pos forwards
 #define Q_KEY               0x51    // pos backwards
 
-void press_key(int key_code)
+void press_key(int key_code, sim_data& data)
 {
     INPUT inputs[2] = {};
     inputs[0].type = INPUT_KEYBOARD;
@@ -31,21 +33,27 @@ void press_key(int key_code)
     {
         case FULLSTOP_KEY:
             std::cout << "-> - Roll Right" << std::endl;
+            data.roll_velocity += 0.1;
             break; 
         case COMMA_KEY:
             std::cout << "<- - Roll Left" << std::endl;
+            data.roll_velocity -= 0.1;
             break; 
         case LEFT_ARROW:
             std::cout << "<- - Yaw left" << std::endl;
+            data.yaw_velocity -= 0.1;
             break;
         case UP_ARROW:
             std::cout << "^  - Pitch up" << std::endl;
+            data.pitch_velocity -= 0.1;
             break;
         case RIGHT_ARROW:
             std::cout << "-> - Yaw Right" << std::endl;
+            data.yaw_velocity += 0.1;
             break;
         case DOWN_ARROW:
             std::cout << "\\/ - Pitch down" << std::endl;
+            data.pitch_velocity += 0.1;
             break;
         case W_KEY:
             std::cout << "^  - Pos up" << std::endl;

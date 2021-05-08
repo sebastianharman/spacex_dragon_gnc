@@ -21,12 +21,12 @@ int main()
         std::cout << "Until start: " << i << std::endl;
         Sleep(START_TIMER_SLEEP);
     }
+    std::cout << "Started" << std::endl;
 
     sim_data live_data = sim_data(); // current flight data
     sim_data prev_data = sim_data(); // last state recorded
-    std::vector <double> data_buffer(11, 0.0); // a vector to hold file data 
+    std::vector <double> data_buffer(8, 0.0); // a vector to hold file data 
     std::string line_buffer; // string for each line for vector
-    bool sleep_on_end = true;
 
     while (1)
     {
@@ -48,6 +48,7 @@ int main()
 
         if (GetKeyState(P_KEY) < 0)
         {
+            std::cout << "Exit" << std::endl;
             return 0;
         }
 
@@ -55,10 +56,7 @@ int main()
 
         /*************************/
 
-        if (sleep_on_end)
-            Sleep(MS_PER_SECOND / REFRESH_RATE_HZ);
-        else
-            sleep_on_end= true;
+        Sleep(MS_PER_SECOND / REFRESH_RATE_HZ);
 
         prev_data.set_all_values(data_buffer); // constructs class which holds data from last loop
     }

@@ -10,13 +10,8 @@ driver.get(URL)
 # the current live data
 val_dict_current = {
     "roll_val": "",
-    "roll_velocity": "",
-
     "pitch_val": "",
-    "pitch_velocity": "",
-
     "yaw_val": "",
-    "yaw_velocity": "",
 
     "x_val": "",
     "y_val": "",
@@ -29,13 +24,8 @@ val_dict_current = {
 # the xpath locations of all the data
 xpath_dict = { 
     "roll_val": "//div[@id='roll']//div[1]",
-    "roll_velocity": "(//div[@id='roll']//div)[2]",
-
     "pitch_val": "//div[@class='error']",
-    "pitch_velocity": "(//div[@class='hud-item']//div)[2]",
-
     "yaw_val": "(//div[@class='error'])[3]",
-    "yaw_velocity": "(//div[@id='yaw']//div)[2]",
 
     "x_val": "//div[@id='x-range']//div[1]",
     "y_val": "//div[@id='y-range']//div[1]",
@@ -46,19 +36,13 @@ xpath_dict = {
 }
 
 while (1):
-
     # where the data will be stored before writing
     file_buffer = ""
 
     # collects the data
     val_dict_current["roll_val"] = driver.find_element_by_xpath(xpath_dict["roll_val"]).text.replace("°", "")
-    val_dict_current["roll_velocity"] = driver.find_element_by_xpath(xpath_dict["roll_velocity"]).text.replace("°/s", "")
-
     val_dict_current["pitch_val"] = driver.find_element_by_xpath(xpath_dict["pitch_val"]).text.replace("°", "")
-    val_dict_current["pitch_velocity"] = driver.find_element_by_xpath(xpath_dict["pitch_velocity"]).text.replace("°/s", "")
-
     val_dict_current["yaw_val"] = driver.find_element_by_xpath(xpath_dict["yaw_val"]).text.replace("°", "")
-    val_dict_current["yaw_velocity"] = driver.find_element_by_xpath(xpath_dict["yaw_velocity"]).text.replace("°/s", "")
 
     val_dict_current["x_val"] = driver.find_element_by_xpath(xpath_dict["x_val"]).text.replace(" m", "")
     val_dict_current["y_val"] = driver.find_element_by_xpath(xpath_dict["y_val"]).text.replace(" m", "")
@@ -67,7 +51,7 @@ while (1):
     val_dict_current["range_val"] = driver.find_element_by_xpath(xpath_dict["range_val"]).text.replace(" m", "")
     val_dict_current["rate"] = driver.find_element_by_xpath(xpath_dict["rate"]).text.replace("m/s", "")
 
-    file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["roll_velocity"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["pitch_velocity"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["yaw_velocity"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["rate"])
+    file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["rate"])
 
     with open(FILE_PATH, 'w') as file:
         file.write(file_buffer)
