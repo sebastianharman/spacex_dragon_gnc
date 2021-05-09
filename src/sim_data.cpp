@@ -6,8 +6,9 @@
 
 sim_data::sim_data()
 {
-    roll_val = pitch_val = yaw_val = range_val = rate = x_velocity = y_velocity = z_velocity = 0.0;
+    roll_val = pitch_val = yaw_val = range_val = rate = 0.0;
     roll_velocity = pitch_velocity = yaw_velocity = 0;
+    x_velocity = y_velocity = z_velocity = 0; 
     x_val = 200.0;
     y_val = 12.0;
     z_val = 30.0;
