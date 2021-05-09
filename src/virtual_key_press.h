@@ -3,6 +3,6 @@
 
 #include "sim_data.h"
 
-void press_key(int key_code, sim_data& data);
+void press_key(int key_code, sim_data& data, bool perform_switch);
 
 #endif

@@ -7,9 +7,10 @@
 #include "sim_data.h"
 #include "virtual_key_press.h"
 #include "gnc_loop.h"
+#include "key_codes.h"
 
 #define FILE_PATH           "sim_data.csv"
-#define REFRESH_RATE_HZ     4
+#define REFRESH_RATE_HZ     20
 #define MS_PER_SECOND       1000
 #define P_KEY               0x50
 #define START_TIMER_SLEEP   500
@@ -24,10 +25,17 @@ int main()
     std::cout << "Started" << std::endl;
 
     sim_data live_data = sim_data(); // current flight data
-    sim_data prev_data = sim_data(); // last state recorded
     std::vector <double> data_buffer(8, 0.0); // a vector to hold file data 
     std::string line_buffer; // string for each line for vector
+    bool is_stable_orientation = false; 
 
+    for (int j = 0; j < 6; j++)
+    {
+        press_key(W_KEY, live_data, false); // hard codes to stop dragon from sinking
+        press_key(A_KEY, live_data, false); // hard coded to push dragon to left
+    }
+
+    int i = 0; // iterates each time the loop cycles, resets every four iterations
     while (1)
     {
         std::ifstream file (FILE_PATH);
@@ -39,27 +47,26 @@ int main()
 
         live_data.set_live_values(data_buffer);
 
-        // position velocity calculations
-        live_data.x_velocity = (prev_data.x_val - live_data.x_val) * REFRESH_RATE_HZ;
-        live_data.y_velocity = (prev_data.y_val - live_data.y_val) * REFRESH_RATE_HZ;
-        live_data.z_velocity = (prev_data.z_val - live_data.z_val) * REFRESH_RATE_HZ;
-
         /*************************/
 
-        if (GetKeyState(P_KEY) < 0)
+        if (GetKeyState(P_KEY) < 0) // checks if the 'P' key is pressed, and if it is, it will exit
         {
             std::cout << "Exit" << std::endl;
             return 0;
         }
 
-        gnc_loop(live_data);
-        std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
+        if (!is_stable_orientation && live_data.roll_val == 0.0 && live_data.pitch_val == 0.0 && live_data.yaw_val == 0.0)
+        {
+            is_stable_orientation = true;
+            std::cout << "---\nSTABLE\n---" << std::endl;
+        }
 
+        gnc_loop(live_data, i, is_stable_orientation);
+        //std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
         /*************************/
 
         Sleep(MS_PER_SECOND / REFRESH_RATE_HZ);
-
-        prev_data.set_live_values(data_buffer); // constructs class which holds data from last loop
+        i++;
     }
 
     return 0;
