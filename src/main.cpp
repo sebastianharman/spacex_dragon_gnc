@@ -29,7 +29,7 @@ int main()
     std::string line_buffer; // string for each line for vector
     bool is_stable_orientation = false; 
 
-    for (int j = 0; j < 6; j++)
+    for (int j = 0; j < 5; j++)
     {
         press_key(W_KEY, live_data, false); // hard codes to stop dragon from sinking
         press_key(A_KEY, live_data, false); // hard coded to push dragon to left

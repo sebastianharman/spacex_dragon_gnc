@@ -16,10 +16,10 @@ const double ORIENTATION_PRECISON =              0.1;
 const double FAST_RATE =                         -1.0;
 const double SLOW_RATE =                         -0.1;
 const double RATE_PRECISON =                     0.05;
-const double RANGE_THRESHOLD =                   40.0;
+const double RANGE_THRESHOLD =                   20.0;
 
 // position
-double POSITION_TARGET_VELOCITY =          4;
+double POSITION_TARGET_VELOCITY =                4;
 
 // general
 const double ITERATION_RESET =                   4; // how many iterations of i before reset
@@ -140,6 +140,9 @@ void position_check(double position_value, double position_velocity, int keycode
             press_key(keycode_positive, data, true);
     }
     
-    if (data.x_val < RANGE_THRESHOLD) // close, goes into more precision, smaller movements
-        POSITION_TARGET_VELOCITY = 1;
+    if (data.x_val < RANGE_THRESHOLD && data.y_val == 0.0 && data.x_val == 0.0)
+    {
+        POSITION_TARGET_VELOCITY = 2;
+    } // close, goes into more precision, smaller movements
+         
 }
