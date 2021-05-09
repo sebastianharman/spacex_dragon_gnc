@@ -13,7 +13,7 @@ This program is used by running the Python script (sim_data.py), and then the .e
 * G++ compiler
 * chromedriver (or other browser equivalent)
 
-### The C++ code interacts with the sim using virtual key presses, the program can be stopped instantly by holding the 'P' key on the keyboard. Do not touch sim while running, as it may mess up the config.
+### The C++ code interacts with the sim using virtual key presses, the program can be stopped instantly by holding the 'P' key on the keyboard. Do not touch sim while running, as it may break the config.
 
 The C++ code can be built by running the "make" command in the src/ directory. The makefile uses g++ as the compiler.
 
