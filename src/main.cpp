@@ -9,7 +9,7 @@
 #include "gnc_loop.h"
 
 #define FILE_PATH           "sim_data.csv"
-#define REFRESH_RATE_HZ     5
+#define REFRESH_RATE_HZ     4
 #define MS_PER_SECOND       1000
 #define P_KEY               0x50
 #define START_TIMER_SLEEP   500
@@ -53,7 +53,7 @@ int main()
         }
 
         gnc_loop(live_data);
-        // std::cout << "\nRoll: " << live_data.roll_velocity << "\nPitch: " << live_data.pitch_velocity << "\nYaw: " << live_data.yaw_velocity << std::endl;
+        //std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
 
         /*************************/
 

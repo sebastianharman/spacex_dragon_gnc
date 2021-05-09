@@ -23,12 +23,17 @@ const double SLOW_ORIENTATION_VELOCITY =         1;
 const double ORIENTATION_VELOCITY_THRESHOLD =    5;
 const double ORIENTATION_PRECISON =              0.1;
 
+const double FAST_RATE =                         -1;
+const double SLOW_RATE =                         -0.1;
+const double RATE_PRECISON =                     0.05;
+const double RANGE_THRESHOLD =                   40;
+
 void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data);
+void rate_check(double rate, double range, int keycode_negative, int keycode_positive, sim_data& data);
 
 void gnc_loop(sim_data& data)
 {
     /*** orientation gnc ***/
-
     // roll
     orientation_check(data.roll_val, data.roll_velocity, COMMA_KEY, FULLSTOP_KEY, data);
     // pitch
@@ -36,8 +41,8 @@ void gnc_loop(sim_data& data)
     // yaw
     orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW, data); 
 
-
     /*** position gnc ***/
+    rate_check(data.rate, data.x_val, Q_KEY, E_KEY, data);
 }
 
 void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data)
@@ -90,5 +95,23 @@ void orientation_check(double orientation_value, double orientation_velocity, in
             else if (orientation_velocity < (SLOW_ORIENTATION_VELOCITY * -1))
                 press_key(keycode_positive, data);
         }
+    }
+}
+
+void rate_check(double rate, double range, int keycode_negative, int keycode_positive, sim_data& data)
+{
+    if (range > RANGE_THRESHOLD) // far away from dock - faster
+    {
+        if (rate < (FAST_RATE - RATE_PRECISON))
+            press_key(keycode_negative, data);
+        else if (rate > (FAST_RATE + RATE_PRECISON))
+            press_key(keycode_positive, data);
+    }
+    if (range < RANGE_THRESHOLD) // close to dock, fly slow
+    {
+        if (rate < (SLOW_RATE - RATE_PRECISON))
+            press_key(keycode_negative, data);
+        else if (rate > (SLOW_RATE + RATE_PRECISON))
+            press_key(keycode_positive, data);
     }
 }

@@ -51,7 +51,7 @@ while (1):
     val_dict_current["range_val"] = driver.find_element_by_xpath(xpath_dict["range_val"]).text.replace(" m", "")
     val_dict_current["rate"] = driver.find_element_by_xpath(xpath_dict["rate"]).text.replace("m/s", "")
 
-    file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["rate"])
+    file_buffer += (val_dict_current["roll_val"] + "\n" + val_dict_current["pitch_val"] + "\n" + val_dict_current["yaw_val"] + "\n" + val_dict_current["x_val"] + "\n" + val_dict_current["y_val"] + "\n" + val_dict_current["z_val"] + "\n" + val_dict_current["range_val"] + "\n" + val_dict_current["rate"])
 
     with open(FILE_PATH, 'w') as file:
         file.write(file_buffer)
