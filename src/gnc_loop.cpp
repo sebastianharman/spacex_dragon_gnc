@@ -17,19 +17,25 @@
 #define E_KEY               0x45    // pos forwards
 #define Q_KEY               0x51    // pos backwards
 
-// flight profile config
-const double FAST_ORIENTATION_VELOCITY =         5;
-const double SLOW_ORIENTATION_VELOCITY =         1;
-const double ORIENTATION_VELOCITY_THRESHOLD =    5;
+/*** flight profile config ***/
+// orientation
+const double FAST_ORIENTATION_VELOCITY =         5.0;
+const double SLOW_ORIENTATION_VELOCITY =         1.0;
+const double ORIENTATION_VELOCITY_THRESHOLD =    5.0;
 const double ORIENTATION_PRECISON =              0.1;
 
-const double FAST_RATE =                         -1;
+// rate
+const double FAST_RATE =                         -1.0;
 const double SLOW_RATE =                         -0.1;
 const double RATE_PRECISON =                     0.05;
-const double RANGE_THRESHOLD =                   40;
+const double RANGE_THRESHOLD =                   40.0;
+
+// position
+const double POSITION_TARGET_VELOCITY =          0.4;
 
 void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data);
-void rate_check(double rate, double range, int keycode_negative, int keycode_positive, sim_data& data);
+void rate_check(int keycode_negative, int keycode_positive, sim_data& data);
+void position_check(double position_value, double position_velocity, int keycode_negative, int keycode_positive, sim_data& data);
 
 void gnc_loop(sim_data& data)
 {
@@ -42,7 +48,10 @@ void gnc_loop(sim_data& data)
     orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW, data); 
 
     /*** position gnc ***/
-    rate_check(data.rate, data.x_val, Q_KEY, E_KEY, data);
+    rate_check(Q_KEY, E_KEY, data);
+
+    /*** position gnc ***/
+    position_check(data.y_val, data.y_velocity, A_KEY, D_KEY, data);
 }
 
 void orientation_check(double orientation_value, double orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data)
@@ -98,20 +107,45 @@ void orientation_check(double orientation_value, double orientation_velocity, in
     }
 }
 
-void rate_check(double rate, double range, int keycode_negative, int keycode_positive, sim_data& data)
+void rate_check(int keycode_negative, int keycode_positive, sim_data& data)
 {
-    if (range > RANGE_THRESHOLD) // far away from dock - faster
+    if (data.x_val > RANGE_THRESHOLD) // far away from dock - faster
     {
-        if (rate < (FAST_RATE - RATE_PRECISON))
+        if (data.rate < (FAST_RATE - RATE_PRECISON))
             press_key(keycode_negative, data);
-        else if (rate > (FAST_RATE + RATE_PRECISON))
+        else if (data.rate > (FAST_RATE + RATE_PRECISON))
             press_key(keycode_positive, data);
     }
-    if (range < RANGE_THRESHOLD) // close to dock, fly slow
+    else if (data.x_val < RANGE_THRESHOLD) // close to dock, fly slow
     {
-        if (rate < (SLOW_RATE - RATE_PRECISON))
+        if (data.rate < (SLOW_RATE - RATE_PRECISON))
             press_key(keycode_negative, data);
-        else if (rate > (SLOW_RATE + RATE_PRECISON))
+        else if (data.rate > (SLOW_RATE + RATE_PRECISON))
             press_key(keycode_positive, data);
+    }
+}
+
+void position_check(double position_value, double position_velocity, int keycode_negative, int keycode_positive, sim_data& data)
+{
+    if (data.x_val > RANGE_THRESHOLD) // far away
+    {
+        if (position_value > 0) // positive
+        {
+            if (position_velocity < POSITION_TARGET_VELOCITY)
+                press_key(keycode_negative, data);
+            else if (position_velocity > POSITION_TARGET_VELOCITY)
+                press_key(keycode_positive, data);
+        }
+        else // negative
+        {
+            if (position_velocity < (POSITION_TARGET_VELOCITY * -1))
+                press_key(keycode_negative, data);
+            else if (position_velocity > (POSITION_TARGET_VELOCITY * -1))
+                press_key(keycode_positive, data);
+        }
+    }
+    else if (data.x_val < RANGE_THRESHOLD) // close - replicates each movement with slight delay
+    {
+
     }
 }

@@ -53,7 +53,7 @@ int main()
         }
 
         gnc_loop(live_data);
-        //std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
+        std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
 
         /*************************/
 
