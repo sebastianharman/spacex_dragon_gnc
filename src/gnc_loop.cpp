@@ -1,5 +1,4 @@
 #include <iostream>
-#include <Windows.h>
 
 #include "sim_data.h"
 #include "virtual_key_press.h"
@@ -7,16 +6,16 @@
 
 /*** flight profile config ***/
 // orientation
-const double FAST_ORIENTATION_VELOCITY =         5.0;
-const double SLOW_ORIENTATION_VELOCITY =         1.0;
-const double ORIENTATION_VELOCITY_THRESHOLD =    5.0;
+const double FAST_ORIENTATION_VELOCITY =         5.0; // rate > threshold
+const double SLOW_ORIENTATION_VELOCITY =         1.0; // rate < threshold
+const double ORIENTATION_VELOCITY_THRESHOLD =    5.0; // degrees before it slows down
 const double ORIENTATION_PRECISON =              0.1;
 
 // rate
-const double FAST_RATE =                         -1.0;
-const double SLOW_RATE =                         -0.1;
+const double FAST_RATE =                         -1.0; // rate > threshold
+const double SLOW_RATE =                         -0.1; // rate < threshold
 const double RATE_PRECISON =                     0.05;
-const double RANGE_THRESHOLD =                   20.0;
+const double RANGE_THRESHOLD =                   10.0; // how far away dragon must be before it slows down
 
 // position
 double POSITION_TARGET_VELOCITY =                4;
@@ -31,25 +30,21 @@ void position_check(double position_value, double position_velocity, int keycode
 void gnc_loop(sim_data& data, int& i, bool is_stable_orientation)
 {
     /*** orientation gnc ***/
-    // roll
-    orientation_check(data.roll_val, data.roll_velocity, COMMA_KEY, FULLSTOP_KEY, data);
-    // pitch
-    orientation_check(data.pitch_val, data.pitch_velocity, UP_ARROW, DOWN_ARROW, data);
-    // yaw
-    orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW, data); 
+    orientation_check(data.roll_val, data.roll_velocity, COMMA_KEY, FULLSTOP_KEY, data); // roll
+    orientation_check(data.pitch_val, data.pitch_velocity, UP_ARROW, DOWN_ARROW, data); // pitch
+    orientation_check(data.yaw_val, data.yaw_velocity, LEFT_ARROW, RIGHT_ARROW, data); // yaw
 
     /*** position gnc ***/
-    if (i != 0 && i % 4 == 0)
+    if (i != 0 && i % 4 == 0) // every 4 iterations of the main gnc loop
     {
         i = 0;
-        rate_check(Q_KEY, E_KEY, data);
+        rate_check(Q_KEY, E_KEY, data); // controls the rate
         if (is_stable_orientation)
         {
-            position_check(data.y_val, data.y_velocity, A_KEY, D_KEY, data);
-            position_check(data.z_val, data.z_velocity, S_KEY, W_KEY, data);
+            position_check(data.y_val, data.y_velocity, A_KEY, D_KEY, data); // Y position
+            position_check(data.z_val, data.z_velocity, S_KEY, W_KEY, data); // Z position
         }
     }
-
 }
 
 void orientation_check(double orientation_value, int orientation_velocity, int keycode_negative, int keycode_positive, sim_data& data)
@@ -141,8 +136,5 @@ void position_check(double position_value, double position_velocity, int keycode
     }
     
     if (data.x_val < RANGE_THRESHOLD && data.y_val == 0.0 && data.x_val == 0.0)
-    {
-        POSITION_TARGET_VELOCITY = 2;
-    } // close, goes into more precision, smaller movements
-         
+        POSITION_TARGET_VELOCITY = 1; // closer to docking
 }

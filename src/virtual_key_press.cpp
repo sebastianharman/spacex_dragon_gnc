@@ -23,32 +23,26 @@ void press_key(int key_code, sim_data& data, bool perform_switch)
             case FULLSTOP_KEY:
                 std::cout << "-> - Roll Right" << std::endl;
                 data.roll_velocity++;
-                //std::cout << "Roll: " << data.roll_velocity << std::endl;
                 break; 
             case COMMA_KEY:
                 std::cout << "<- - Roll Left" << std::endl;
                 data.roll_velocity--;
-                //std::cout << "Roll: " << data.roll_velocity << std::endl;
                 break; 
             case LEFT_ARROW:
                 std::cout << "<- - Yaw left" << std::endl;
                 data.yaw_velocity--;
-                //std::cout << "Yaw: " << data.yaw_velocity << std::endl;
                 break;
             case UP_ARROW:
                 std::cout << "^  - Pitch up" << std::endl;
                 data.pitch_velocity--;
-                //std::cout << "Pitch: " << data.pitch_velocity << std::endl;
                 break;
             case RIGHT_ARROW:
                 std::cout << "-> - Yaw Right" << std::endl;
                 data.yaw_velocity++;
-                //std::cout << "Yaw: " << data.yaw_velocity << std::endl;
                 break;
             case DOWN_ARROW:
                 std::cout << "\\/ - Pitch down" << std::endl;
                 data.pitch_velocity++;
-                //std::cout << "Pitch: " << data.pitch_velocity << std::endl;
                 break;
             case W_KEY:
                 std::cout << "^  - Pos up" << std::endl;

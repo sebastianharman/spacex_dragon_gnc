@@ -58,14 +58,14 @@ int main()
         if (!is_stable_orientation && live_data.roll_val == 0.0 && live_data.pitch_val == 0.0 && live_data.yaw_val == 0.0)
         {
             is_stable_orientation = true;
-            std::cout << "---\nSTABLE\n---" << std::endl;
+            std::cout << "\n---\nSTABLE\n---\n" << std::endl;
         }
 
         gnc_loop(live_data, i, is_stable_orientation);
-        //std::cout << "\nx_velocity: " << live_data.x_velocity << "\ny_velocity: " << live_data.y_velocity << "\nz_velocity: " << live_data.z_velocity << std::endl;
+
         /*************************/
 
-        Sleep(MS_PER_SECOND / REFRESH_RATE_HZ);
+        Sleep(MS_PER_SECOND / REFRESH_RATE_HZ); 
         i++;
     }
 
