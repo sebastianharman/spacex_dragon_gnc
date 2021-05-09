@@ -8,7 +8,7 @@ A program to automatically fly the SpaceX Crew Dragon spacecraft in to dock at t
 
 This program is used by running the Python script *(sim_data.py)*, and then the .exe built from the C++ code. The Python code launches a new browser windows and retrieves sim data from the it in real time, and the C++ code controls the spacecraft based off that data. 
 
-###[Watch a video of it working.](https://youtu.be/p8nfWJ3dC5s)
+### [Watch a video of it working.](https://youtu.be/p8nfWJ3dC5s)
 
 ## Requirements:
 * Python 3
